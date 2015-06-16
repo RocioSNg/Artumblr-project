@@ -1,4 +1,11 @@
-import pytumblr
+#-------------------------------------------------------#
+#			Tumblr API functions						#
+#			Author: Rocio Ng 							#		
+#			Purpose: A collection of functions			#
+#			for making calls to the Tumblr  			#
+#-------------------------------------------------------#
+
+import pytumblr	# a python wrapper for the tumblr API
 from secret import *  # import needed authentification keys
 import csv
 # import json
@@ -11,10 +18,12 @@ client = pytumblr.TumblrRestClient(
 	TOKEN_SECRET
 	)
 
+# for testing:
 # client.blog_info('rocio-ng.tumblr.com')
 # followers = client.followers('rocio-ng.tumblr.com')
 # print followers["total_users"]
-# # test = json.dumps(followers.json())# returns json format
+# test = json.dumps(followers.json())# returns json format
+
 
 #----Get list of artist User names on Tumblr-------------#
 
@@ -35,17 +44,9 @@ def find_artists(time_stamp):
 		artists.append(str(post["blog_name"]))  # str gets rid of unicode
 
 	artists =  list(set(artists)) # get rid of duplicates
-	print "Adding %s unique artists" % len(artists)
+	print "Attempting to add %s artists" % len(artists)
 	return artists
 
-#----Get Info of a blog from an artist---------#
-# 	seems more useful to use a Class ** see below **
-
-# def get_blog_info(blog_name):
-# 	blog_info = client.blog_info(blog_name)
-# 	url = str(blog_info['blog']['url'])
-# 	posts = str(blog_info['blog']['posts'])
-# 	return {blog_name:[url, posts]}
 
 #--------Get informaton regarding an Artist's blog-----------#
 
@@ -55,9 +56,7 @@ class Tumblr_Artist:
 	'''
 	def __init__(self, blog_name):
 		self.blog_name = blog_name
-	# def blog_info(self):
-	# 	blog_info = client.blog_info(self.blog_name)
-	# 	return blog_info
+
 	def blog_url(self):
 		'''gets blog url for the user'''
 		blog_info = client.blog_info(self.blog_name)

@@ -10,17 +10,12 @@
 from API_functions import Tumblr_Artist
 from secret import SQL_password
 import pymysql as mdb
-# import csv
-# import pandas as pd 
-
-
 
 # Establish connection to the SQL database
 print "Now connecting to tumblr_db"
 con = mdb.connect('localhost','root', SQL_password, 'tumblr_db')
 
 # Query the tumblr_db Artists table for blog names
-
 with con:
 	cur = con.cursor()
 	# only select blog names that is missing information

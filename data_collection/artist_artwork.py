@@ -72,6 +72,9 @@ for blog_name in blog_name_list:
 		# print art_dump
 		art_post = art_dump[i]
 		
+
+
+		
 		# collect information we want from API call returns
 		# post_id = art_post["id"] # id refers to BLOG ID NOT ART ID
 		# encode method gets rid of unicode format
