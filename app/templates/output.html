@@ -17,8 +17,8 @@
     <!-- Bootstrap core CSS -->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="starter-template.css" rel="stylesheet">
+      <!--customized CSS Sytlesheet -->
+    <link rel="stylesheet" type="text/css" href="../static/css/main_styles.css">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -104,9 +104,9 @@
 
         <h4> You searched for matches for the following image:</h4>
 
-        <a href={{origurl}}><img src={{origurl}} height="300"></a>
+        <a href={{origurl}}><img src={{origurl}} height="500"></a>
         <p></p>
-        <p class="lead">Here are the urls of the top five art matches. Enjoy!!</p>
+        <p class="lead">Here is is sampling of artwork that is similar to your query image. Enjoy!</p>
       </div>
 
       <table class="table table-hover">
@@ -114,10 +114,25 @@
       <tr><th>Artwork:</th></tr>
       <!-- <th>URL</th><th>Population</th></tr> -->
 
-      {% for url in urls %}
-      <tr><td><a href={{url}}><img src={{url}} height="300"></a></td></tr>
-     
+      <!-- {% for url in urls %} -->
+      {% for img in img_matches %}
+      <tr>
+          <td>
+          <a href={{img_matches[img][1]}}>{{img_matches[img][0]}}</a>
+          </td>
+          <td>
+          <a href={{img}}><img src={{img}} height="300"></a>
+
+          </td>
+      </tr>
+
       {% endfor %}
+
+      
+
+     
+     <!--  {% endfor %} -->
+
       </table>
 
 

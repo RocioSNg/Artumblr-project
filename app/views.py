@@ -6,7 +6,7 @@ from art_matcher_algorithm import art_match
 
 
 db = mdb.connect(user="root", host="localhost", 
-	passwd=SQL_password, db="world_innodb", charset='utf8')
+	passwd=SQL_password, db="tumblr_db")
 
 #----app.route() directs to different pages----#
 
@@ -50,11 +50,33 @@ def index():
 @app.route('/output')
 
 def art_output():
-    url = request.args.get('ID')
-    url_list = art_match(url)
+    query_url = request.args.get('ID')
+    url_list = art_match(query_url)
     # for url in urls:
+
+    # produces a lists of art urls that match the query
+    img_matches = {}
+
+    with db:
+    	cur = db.cursor()
+    	blog_info = []
+        # for each art url find the artist name and blog url that matches
+        for url in url_list:
+            name = cur.execute("SELECT Artists.blog_name, Artists.blog_url FROM Artists,Artwork WHERE Artwork.img_url=%s AND Artists.blog_name = Artwork.blog_name",(url))
+            query_results = cur.fetchall()
+            # appends each in a diction
+            
+            for result in query_results:
+                blog_info = [query_results[0][0], query_results[0][1]]    
+            img_matches[url] = blog_info
+    
+    # for result in query_results:
+        
+
     the_result = ''
-    return render_template("output.html", origurl = url, urls = url_list, the_result = the_result)    
+    return render_template("output.html", origurl = query_url, 
+    	urls = url_list, img_matches = img_matches, the_result = the_result)   
+
 
 #url_list = []
 # for url in urls:
