@@ -57,6 +57,7 @@ while time_stamp > time_past:
 	time_stamp -=  increment 
 
 print "Artist Blogname miner completed. %i new unique artists added to the database" % num_artists
+
 # for testing:
 # with con:
 #    cur = con.cursor()

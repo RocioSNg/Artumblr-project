@@ -71,12 +71,6 @@ class Tumblr_Artist:
 def get_art(blog_name):
 	art_posts = client.posts(blog_name, 
 		type='photo', tag='art',
-		limit = 20, reblog_info=False, notes_info=False)
+		limit = 20, reblog_info=True, notes_info=False)
 	return art_posts
 
-class Artwork:
-	'''Each instance will refer to a specific piece of
-	artwork for each artist in the artist list'''
-	def __init__(self, blog_name):
-		pass
-# print get_art('rocio-ng.tumblr.com')

@@ -42,6 +42,7 @@ for blog_name in blog_name_list:
 	url = artist.blog_url()
 	count = artist.posts_count()
 
+	
 	with con:
 		cur = con.cursor()
 		cur.execute("UPDATE Artists set blog_url=%s, posts_count=%s WHERE blog_name=%s", (url,count,name))
