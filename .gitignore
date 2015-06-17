@@ -9,6 +9,8 @@
 *.sublime-project
 *.sublime-workspace
 *.ai
+*.pem
+
 
 app/secret.py
 app/__init__.py

@@ -38,7 +38,7 @@ import urllib
 #-----------FEATURE EXTRACTION FROM DIFFERENT CHANNELS IN THE IMAGE-----------#
 
 def BGR_channels(img_path):
-	'''extracts arrays of values of BGR channels separately for the image
+	'''extracts arrays of values of BGR and G channels separately for the image
 	divides by 255 to convert to a fraction of intensity (value between 0 and 1)
 	This also controls for size of image
 	'''
@@ -46,7 +46,9 @@ def BGR_channels(img_path):
 	blue = img[:,:,0]/255
 	green = img[:,:,1]/255
 	red = img[:,:,2]/255
-	return blue, green, red
+	gray = cv2.imread(img_path, cv2.COLOR_BGR2GRAY)
+	gray = gray/255
+	return blue, green, red, gray
 
 
 def LAB_channels(img_path):
@@ -140,22 +142,22 @@ def img_from_url(url):
 		pass
 
 	# download the image and saves it as the designated path
-	print "now downloading the image"
+	# print "now downloading the image"
 	urllib.urlretrieve(url, path)
 	# extract channel info
-	blue, green, red = BGR_channels(path)
+	blue, green, red, gray = BGR_channels(path)
 	l,a,b = LAB_channels(path)
 	#extract contour info
 	img_contour = Contour(path)
 	tot_cont = img_contour.total()
 	ext_cont = img_contour.external()
 	int_cont = tot_cont - ext_cont # internal contors
-	cont_ratio = int_cont/ext_cont
+	cont_ratio = ext_cont/int_cont
 	# print cont_ratio
 
 
 	feature_array = [] # will fill with features
-	for channel in [blue, green, red, l, a, b]:
+	for channel in [blue, green, red, gray, l, a, b]:
 		art_char = [avg_intensity(channel), 
 		intensity(channel, "high"), 
 		intensity(channel, "medium"), 
