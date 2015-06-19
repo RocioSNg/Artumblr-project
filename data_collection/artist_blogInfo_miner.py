@@ -13,7 +13,10 @@ import pymysql as mdb
 
 # Establish connection to the SQL database
 print "Now connecting to tumblr_db"
-con = mdb.connect('localhost','root', SQL_password, 'tumblr_db')
+con = mdb.connect('localhost',
+	'root', 
+	SQL_password, 
+	'tumblr_db')
 
 # Query the tumblr_db Artists table for blog names
 with con:

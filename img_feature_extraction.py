@@ -172,6 +172,6 @@ def img_from_url(url):
 
 
 #for testing
-# fv = img_from_url("https://41.media.tumblr.com/3b3fae7e380fbc25f802cc5994730586/tumblr_n1xxqg9O4p1sedjuto1_500.jpg")
-# print fv
+#fv = img_from_url("http://www.cianellistudios.com/images/abstract-art/abstract-art-mother-earth.jpg")
+#print fv
 

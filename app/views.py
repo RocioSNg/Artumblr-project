@@ -53,29 +53,39 @@ def art_output():
     query_url = request.args.get('ID')
     url_list = art_match(query_url)
     # for url in urls:
-
+    
     # produces a lists of art urls that match the query
     img_matches = {}
 
     with db:
     	cur = db.cursor()
-    	blog_info = []
+    	
         # for each art url find the artist name and blog url that matches
+        print "now retrieving blog names for the matched art"
         for url in url_list:
             name = cur.execute("SELECT Artists.blog_name, Artists.blog_url FROM Artists,Artwork WHERE Artwork.img_url=%s AND Artists.blog_name = Artwork.blog_name",(url))
             query_results = cur.fetchall()
             # appends each in a diction
-            
-            for result in query_results:
-                blog_info = [query_results[0][0], query_results[0][1]]    
+            # blog_info = []
+            # for result in query_results:
+            blog_info = [query_results[0][0], query_results[0][1]]    
             img_matches[url] = blog_info
     
-    # for result in query_results:
-        
+    artwork_url=[]
+    artists=[]
+    artists_url = []
+    for img in img_matches:
+        artwork_url.append(img)
+        artists.append(img_matches[img][0])
+        artists_url.append(img_matches[img][1])
 
-    the_result = ''
-    return render_template("output.html", origurl = query_url, 
-    	urls = url_list, img_matches = img_matches, the_result = the_result)   
+    # for result in query_results:
+    return render_template("output.html", origurl = query_url, artists=artists, artwork_url=artwork_url, artists_url=artwork_url)   
+      
+
+   
+    # return render_template("output.html", origurl = query_url, 
+    # 	urls = url_list, img_matches = img_matches, the_result = the_result)   
 
 
 #url_list = []

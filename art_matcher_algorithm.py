@@ -7,7 +7,8 @@
 #					the query image in the feature 			#
 #					space									#
 #-----------------------------------------------------------#
-
+from secret import SQL_password
+import pymysql as mdb
 import csv
 import pandas as pd
 import numpy as np
@@ -15,15 +16,60 @@ import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from img_feature_extraction import img_from_url
 import scipy.spatial as sp
+import pickle
+from sklearn.externals import joblib
+
 
 
 # for testing:
-# url = "http://40.media.tumblr.com/bae2ac17797e7eb78038834afa7754e9/tumblr_nhk0vpni6P1teo717o1_1280.jpg"
-
+# link = "http://www.cianellistudios.com/images/abstract-art/abstract-art-mother-earth.jpg"
 # for future --- allow user to decide how many works to return
 
 # def img_cluster():
 # 	pass
+
+def artwork_df():
+	#----------Convert SQL Image Feature Database to Pandas Dataframe-------------# 
+	print "Now connecting to tumblr_db"
+	con = mdb.connect('localhost',
+		'root', 
+		SQL_password, 
+		'tumblr_db')
+
+	with con:
+		cur = con.cursor()
+		print "Now extracting the feature space for all the images in the Database"
+		# cur.execute("SELECT * FROM Artwork WHERE Avg_Gray is NOT NULL")
+		sql = "SELECT * FROM Artwork WHERE Avg_Gray is NOT NULL"
+		# query = cur.fetchall()
+		art_df = pd.read_sql(sql, con)
+		# get rid of unwanted columns
+		art_df = art_df.drop(["Id", "Tags", "Notes"], axis =1)
+		art_df = art_df.set_index(["Blog_Name", "Img_url"])
+	
+	return art_df
+		#print art_df.head()
+
+
+
+def k_means():
+	# load the feature space of art images in the database
+	# art = pd.DataFrame.from_csv('data/artwork_features_MVP.csv', index_col= [0,1])
+
+	art_df = artwork_df()
+
+	#---------------Clustering on CHANNELS ONLY--------------------------#
+
+	# include only channel columns
+	art_df = art_df.loc[:,"Avg_Blue":"Low_Gray"]
+	# print channels_df.head()
+	# run clustering algorithm and fit the model
+	print "Now running the model"
+	k_means = KMeans(n_clusters=10)
+	k_means.fit(art_df)
+	print "Now pickling the results of the model"
+	clf = joblib.dump(k_means, "kmeans_model.pkl")
+
 
 def art_match(url):
 	'''downloads image at query url, extracts feature vector
@@ -31,20 +77,23 @@ def art_match(url):
 	closest to the query image
 	'''
 
-	# load the feature space of art images in the database
-	art = pd.DataFrame.from_csv('data/artwork_features.csv', index_col= [0,1])
-	
-	# run clustering algorithm and fit the model
-	k_means = KMeans(n_clusters=4)
-	k_means.fit(art)
+	# load model results and database
+	k_means = joblib.load('kmeans_model.pkl') 
+	art_df = artwork_df()
+	art_df = art_df.loc[:,"Avg_Blue":"Low_Gray"]
 
 	# load QUERY url and extracts the feature vector
-	query_img = img_from_url(url)
+	print "Loading the query image"
+	query_img = img_from_url(url) # this has changed
+	# include only channel features
+	query_img = query_img[0:16] # last four have contour info
+	
+	print query_img
 
 	# assign cluster number for query image
 	print "Now assigning query image to a cluster"
 	cluster = k_means.predict(query_img)[0]
-	#cluster = predict[0] # just a number
+	#cluster = predict[0] 
 
 	print "Now extracting artwork from the same cluster"
 	# extract the cluster that each art image belongs to
@@ -52,8 +101,9 @@ def art_match(url):
 	# subset dataframe to only include images in the same
 	# cluster as the query image
 	indexes = np.where(labels == cluster)[0]
-	art_subset = art.iloc[indexes]
-
+	art_subset = art_df.iloc[indexes]
+	print "There are %i images in this cluster" % len(art_subset)
+	#print art_subset.head()
 	#cluster_center = k_means.cluster_centers_[cluster]
 
 	
@@ -66,16 +116,20 @@ def art_match(url):
 	    distances.append(sp.distance.euclidean(row,query_img))
 	# adds noew column containing the distances    
 	art_subset["Distance"] = distances
+	
 
 	# sort and extract the  5 closest images
-	df = art_subset.sort('Distance').iloc[0:5]
+	df = art_subset.sort('Distance').iloc[0:6]
 	df.reset_index(inplace = True)
 	# get urls they refer to
-	artists = list(df['X'])
-	art_urls = list(df['X.1'])
+	artists = list(df["Blog_Name"])
+	art_urls = list(df['Img_url'])
 
 	return art_urls
 
 
 # for testing:
-# predictor(url)
+# print art_match(link)
+
+# if __name__ == '__main__':
+# 	k_means()

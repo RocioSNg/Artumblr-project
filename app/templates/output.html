@@ -45,12 +45,12 @@
            <span class="icon-bar"></span>
            <span class="icon-bar"></span>
          </button>
-         <a class="navbar-brand" href="#">Project name</a>
+         <a class="navbar-brand" href="#">artumbl.r</a>
        </div>
        <div class="collapse navbar-collapse">
          <ul class="nav navbar-nav">
-           <li class="active"><a href="#">Home</a></li>
-           <li><a href="#about">About</a></li>
+           <li class="active"><a href="/index">Home</a></li>
+           <li><a href="/about">About</a></li>
            <li><a href="#contact">Contact</a></li>
          </ul>
        </div><!--/.nav-collapse -->
@@ -60,34 +60,41 @@
 <br><br>
 
 
-
-
 <!-- more added -->
 
+<!--HEADER BANNER-->
 <!-- THE FORM KEEP THE SAME-->
-  <div class="container">
-      <div class="starter-template">
+  <div class="header_container">
+      
+      <div class="header_text">
         <p></p>
-          <h1>artumbl.r</h1>
+          <!-- <h1>artumbl.r</h1> -->
           <p></p>
-          <h3>your personal art discovery engine</h3>
-          <p>Enter the url of an image you love</p>
-  </div>
-     <div class = "container">
+          <img src="../static/images/logo.gif" height=250px>
+          <h1>your personal art discovery engine</h1>
+          
+  
+      </div>
 
       <!-- form that loads output page -->
+<center>
+      <div id="form">
+      <h2>Enter the url of an image you love</h2>
       <form  action="/output" method="GET">
           <div class="form-group">
             <label for="ID">Image URL:</label>
-            <input type="text" id="ID" name='ID' placeholder="enter here ">
+            <input type="text" id="ID" name='ID' placeholder="  enter here ">
           </div>
 
           <div>
-            <button type="submit" class="btn btn-default btn-lg">Find me art!</button>
+            <button type="submit" id = "submit_button" class="btn btn-lg btn-primary">Find me art!</button>
           </div>
+     </div>
 
-        </form>
+      </form>
+
       </div>
+</center>
 
       <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
       <script src="static/js/bootstrap.min.js"></script>
@@ -96,42 +103,62 @@
 
 
 
+
+
+
 <!-- DISPLAY OF RESULTS -->
 
-    <div class="container">
+    <div class="output_container">
       <div class="starter-template">
-        <h2>Results:</h2>
+     
 
-        <h4> You searched for matches for the following image:</h4>
+        <p class="result_text">Your image:</p> 
 
-        <a href={{origurl}}><img src={{origurl}} height="500"></a>
+        <img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200" src={{origurl}} data-holder-rendered="true" style="height: 500px;">
+
+      
         <p></p>
-        <p class="lead">Here is is sampling of artwork that is similar to your query image. Enjoy!</p>
+        <p class="result_text">Here is is sampling of artwork that are similar. Enjoy!</p>
       </div>
 
-      <table class="table table-hover">
+      <table class="table">
       <!-- table headers  -->
-      <tr><th>Artwork:</th></tr>
+      <!-- <tr><th colspan="3">Artwork</th></tr> -->
       <!-- <th>URL</th><th>Population</th></tr> -->
 
-      <!-- {% for url in urls %} -->
-      {% for img in img_matches %}
+     
+      
       <tr>
-          <td>
-          <a href={{img_matches[img][1]}}>{{img_matches[img][0]}}</a>
-          </td>
-          <td>
-          <a href={{img}}><img src={{img}} height="300"></a>
-
-          </td>
-      </tr>
-
+      {% for n in range(0,3) %}
+      <td width=>
+      
+      <a href={{artists_url[n]}}>{{artists[n]}}</a><br>
+      <a href={{artwork_url[n]}}><img src={{artwork_url[n]}} height="450"></a><br>
+      <a href="/output">Submit this image</a><br>
+      
+      </td>
       {% endfor %}
+      </tr>
+    
+      
+      <tr>
+      {% for n in range(3,6) %}
+      <td>
+      <a href={{artists_url[n]}}>{{artists[n]}}</a><br>
+      <a href={{artwork_url[n]}}><img src={{artwork_url[n]}} height="450"></a><br>
+      <a href="/output">Submit this image</a><br>
+      </td>
+      {% endfor %}
+      </tr>
+      
+      
+  
 
       
 
-     
-     <!--  {% endfor %} -->
+      
+
+    
 
       </table>
 
@@ -140,9 +167,9 @@
 
     <div class="container">
       <div class="starter-template">
-        <h3>Another Result:</h3>
+       <!--  <h3>Another Result:</h3>
         <p class="lead">Now we've taken the input and called a function from your package.<br>The result is {{the_result}}</p>
-      </div>
+      </div> -->
 
 
       <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
