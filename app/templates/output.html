@@ -60,7 +60,6 @@
 <br><br>
 
 
-<!-- more added -->
 
 <!--HEADER BANNER-->
 <!-- THE FORM KEEP THE SAME-->
@@ -132,8 +131,8 @@
       {% for n in range(0,3) %}
       <td width=>
       
-      <a href={{artists_url[n]}}>{{artists[n]}}</a><br>
-      <a href={{artwork_url[n]}}><img src={{artwork_url[n]}} height="450"></a><br>
+      <a href={{artists_url[n]}} target="_blank">{{artists[n]}}</a><br>
+      <a href={{artists_url[n]}} target="_blank"><img src={{artwork_url[n]}} height="450"></a><br>
       <a href="/output">Submit this image</a><br>
       
       </td>
@@ -144,8 +143,8 @@
       <tr>
       {% for n in range(3,6) %}
       <td>
-      <a href={{artists_url[n]}}>{{artists[n]}}</a><br>
-      <a href={{artwork_url[n]}}><img src={{artwork_url[n]}} height="450"></a><br>
+      <a href={{artists_url[n]}} target="_blank">{{artists[n]}}</a><br>
+      <a href={{artists_url[n]}} target="_blank"><img src={{artwork_url[n]}} height="450"></a><br>
       <a href="/output">Submit this image</a><br>
       </td>
       {% endfor %}

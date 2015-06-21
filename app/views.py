@@ -80,7 +80,7 @@ def art_output():
         artists_url.append(img_matches[img][1])
 
     # for result in query_results:
-    return render_template("output.html", origurl = query_url, artists=artists, artwork_url=artwork_url, artists_url=artwork_url)   
+    return render_template("output.html", origurl = query_url, artists=artists, artwork_url=artwork_url, artists_url=artists_url)   
       
 
    
