@@ -1,7 +1,7 @@
 *.db
 *.txt
 *.pyc
-*.jpg
+
 *.png
 *.gif
 *.sql
@@ -16,7 +16,7 @@ app/secret.py
 app/__init__.py
 app/templates/cities.html
 app/templates/starter-template.css
-app/static/
+app/static/images/for_banner
 
 data
 hidden
