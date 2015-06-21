@@ -13,7 +13,7 @@
 
 
 app/secret.py
-app/__init__.py
+
 app/templates/cities.html
 app/templates/starter-template.css
 app/static/images/for_banner
