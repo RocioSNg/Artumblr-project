@@ -66,9 +66,6 @@
   <div class="header_container">
       
       <div class="header_text">
-        <p></p>
-          <!-- <h1>artumbl.r</h1> -->
-          <p></p>
           <img src="../static/images/logo.gif" height=150px>
           <h1>your personal art discovery engine</h1>
           
@@ -113,7 +110,7 @@
 
         <p class="result_text">Your image:</p> 
 
-        <img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200" src={{origurl}} data-holder-rendered="true" style="height: 500px;">
+        <img data-src="holder.js/200x200" class="img-thumbnail" alt="200x200" src={{origurl}} data-holder-rendered="true" style="height: 400px;">
 
       
         <p></p>
@@ -132,7 +129,7 @@
       <td width=>
       
       <a href={{artists_url[n]}} target="_blank">{{artists[n]}}</a><br>
-      <a href={{artists_url[n]}} target="_blank"><img src={{artwork_url[n]}} height="450"></a><br>
+      <a href={{artists_url[n]}} target="_blank"><img src={{artwork_url[n]}} height="250"></a><br>
       <a href="/output">Submit this image</a><br>
       
       </td>
@@ -144,7 +141,7 @@
       {% for n in range(3,6) %}
       <td>
       <a href={{artists_url[n]}} target="_blank">{{artists[n]}}</a><br>
-      <a href={{artists_url[n]}} target="_blank"><img src={{artwork_url[n]}} height="450"></a><br>
+      <a href={{artists_url[n]}} target="_blank"><img src={{artwork_url[n]}} height="250"></a><br>
       <a href="/output">Submit this image</a><br>
       </td>
       {% endfor %}
