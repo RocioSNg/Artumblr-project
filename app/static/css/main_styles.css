@@ -85,3 +85,7 @@ a {
 	color: #DCE1DE;
 	font-size: 20px;
 }
+
+img{
+	max-width: 500px;
+}
