@@ -1,7 +1,7 @@
 *.db
 *.txt
 *.pyc
-*.gif
+
 
 *.log
 *.sublime-project
