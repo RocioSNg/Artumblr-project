@@ -13,6 +13,7 @@ import numpy as np
 from numpy import array
 import cv2
 import urllib
+import os
 
 # class Artwork:
 # 	def __init__(self, img_path):
@@ -155,6 +156,8 @@ def img_from_url(url):
 	cont_ratio = ext_cont/int_cont
 	# print cont_ratio
 
+	# delete image file
+	os.remove(path)
 
 	feature_array = [] # will fill with features
 	for channel in [blue, green, red, gray, l, a, b]:
