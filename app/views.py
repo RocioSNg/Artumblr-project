@@ -3,6 +3,7 @@ from app import app
 import pymysql as mdb
 from secret import SQL_password
 from art_matcher_algorithm import art_match
+import urllib
 
 
 db = mdb.connect(user="root", host="localhost", 
@@ -48,9 +49,15 @@ def index():
 #     return render_template("input.html")
 
 @app.route('/output')
+@app.route('/output/<url>')
 
-def art_output():
-    query_url = request.args.get('ID')
+def art_output(url=None):
+    if url == None:
+        query_url = request.args.get('ID')
+    else:
+        query_url = "http://37.media.tumblr.com/c4f9be2de49a997933cc3d5c78a36328/tumblr_n2cuiaAG3p1t7b5qro5_r1_1280.jpg"
+        print query_url
+
     url_list = art_match(query_url)
     # for url in urls:
     
@@ -83,7 +90,7 @@ def art_output():
     return render_template("output.html", origurl = query_url, artists=artists, artwork_url=artwork_url, artists_url=artists_url)   
       
 
-   
+
     # return render_template("output.html", origurl = query_url, 
     # 	urls = url_list, img_matches = img_matches, the_result = the_result)   
 
