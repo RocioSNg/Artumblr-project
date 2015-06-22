@@ -2,20 +2,20 @@
 *.txt
 *.pyc
 *.gif
-*.sql
+
 *.log
 *.sublime-project
 *.sublime-workspace
 *.ai
 *.pem
 
-
+demo_slides
 app/secret.py
-
+data_collection/SQL_database.sql
 app/templates/cities.html
 app/templates/starter-template.css
 app/static/images/for_banner
-
+image.jpg
 data
 hidden
 tmp
