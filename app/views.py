@@ -88,8 +88,14 @@ def art_output(url=None):
 
     # for result in query_results:
     return render_template("output.html", origurl = query_url, artists=artists, artwork_url=artwork_url, artists_url=artists_url)   
-      
 
+@app.route('/about')
+def about():
+    return render_template("about.html")
+
+@app.route('/slides')
+def slides():
+    return render_template("demo/demo.html")
 
     # return render_template("output.html", origurl = query_url, 
     # 	urls = url_list, img_matches = img_matches, the_result = the_result)   
