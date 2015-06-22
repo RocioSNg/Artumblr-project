@@ -36,6 +36,9 @@
 h1{
 	font-size: 250%;
 }
+h2{
+	font-size: 130%;
+}
 
 .header_text{
 	
@@ -51,7 +54,7 @@ h1{
 	margin: 20px;
 	background-color: #2C365E;
 	color: #9CFFFA;
-	width: 550px;
+	width: 450px;
 	border-radius: 10px;
 }
 
