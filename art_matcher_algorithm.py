@@ -28,8 +28,9 @@ from sklearn.externals import joblib
 # def img_cluster():
 # 	pass
 
+#----------Convert SQL Image Feature Database to Pandas Dataframe-------------# 
 def artwork_df():
-	#----------Convert SQL Image Feature Database to Pandas Dataframe-------------# 
+	
 	print "Now connecting to tumblr_db"
 	con = mdb.connect('localhost',
 		'root', 
@@ -50,6 +51,9 @@ def artwork_df():
 	return art_df
 		#print art_df.head()
 
+#-----Have csv pre-loaded to save time on the algorithm-------#
+# artwork_df = artwork_df()
+# artwork_df.to_csv("art_df.csv")
 
 
 def k_means():
@@ -57,6 +61,7 @@ def k_means():
 	# art = pd.DataFrame.from_csv('data/artwork_features_MVP.csv', index_col= [0,1])
 
 	art_df = artwork_df()
+
 
 	#---------------Clustering on CHANNELS ONLY--------------------------#
 
@@ -78,8 +83,13 @@ def art_match(url):
 	'''
 
 	# load model results and database
+	print "Now loading the Pickled K-means Fit"
 	k_means = joblib.load('kmeans_model.pkl') 
-	art_df = artwork_df()
+	# art_df = artwork_df()
+	print "Now loading art features dataframe"
+	art_df = pd.DataFrame.from_csv("art_df.csv", index_col= [0,1])
+
+
 	art_df = art_df.loc[:,"Avg_Blue":"Low_Gray"]
 
 	# load QUERY url and extracts the feature vector
@@ -128,6 +138,8 @@ def art_match(url):
 	return art_urls
 
 
+# for testing:
+# link = "http://www.cianellistudios.com/images/abstract-art/abstract-art-mother-earth.jpg"
 # for testing:
 # print art_match(link)
 
