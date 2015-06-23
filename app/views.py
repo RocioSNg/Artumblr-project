@@ -58,7 +58,12 @@ def art_output(url=None):
         query_url = "http://37.media.tumblr.com/c4f9be2de49a997933cc3d5c78a36328/tumblr_n2cuiaAG3p1t7b5qro5_r1_1280.jpg"
         print query_url
 
-    url_list = art_match(query_url)
+
+    #add exception for when user does not put in an image
+    try:
+        url_list = art_match(query_url)
+    except:
+        return render_template("error.html")
     # for url in urls:
     
     # produces a lists of art urls that match the query
