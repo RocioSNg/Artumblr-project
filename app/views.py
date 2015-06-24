@@ -37,36 +37,43 @@ def art_output(url=None):
     #     query_url = "http://37.media.tumblr.com/c4f9be2de49a997933cc3d5c78a36328/tumblr_n2cuiaAG3p1t7b5qro5_r1_1280.jpg"
     #     print query_url
 
-
-    #add exception for when user does not put in an image
-    try:
-        url_list = art_match(query_url)
-        img_matches = {}
-
-        with db:
-            cur = db.cursor()
-            
-            # for each art url find the artist name and blog url that matches
-            print "now retrieving blog names for the matched art"
-            for url in url_list:
-                name = cur.execute("SELECT Artists.blog_name, Artists.blog_url FROM Artists,Artwork WHERE Artwork.img_url=%s AND Artists.blog_name = Artwork.blog_name",(url))
-                query_results = cur.fetchall()
-                # appends each in a diction
-                # blog_info = []
-                # for result in query_results:
-                blog_info = [query_results[0][0], query_results[0][1]]    
-                img_matches[url] = blog_info
-        
-        artwork_url=[]
-        artists=[]
-        artists_url = []
-        for img in img_matches:
-            artwork_url.append(img)
-            artists.append(img_matches[img][0])
-            artists_url.append(img_matches[img][1])
-
-    except:
+    # if user enters something that is not a proper image
+    if not query_url.endswith("jpg") or query_url.endswith("png"):
         return render_template("error.html")
+
+
+
+    else:
+
+        #add exception for when user does not put in an image
+        try:
+            url_list = art_match(query_url)
+            img_matches = {}
+
+            with db:
+                cur = db.cursor()
+                
+                # for each art url find the artist name and blog url that matches
+                print "now retrieving blog names for the matched art"
+                for url in url_list:
+                    name = cur.execute("SELECT Artists.blog_name, Artists.blog_url FROM Artists,Artwork WHERE Artwork.img_url=%s AND Artists.blog_name = Artwork.blog_name",(url))
+                    query_results = cur.fetchall()
+                    # appends each in a diction
+                    # blog_info = []
+                    # for result in query_results:
+                    blog_info = [query_results[0][0], query_results[0][1]]    
+                    img_matches[url] = blog_info
+            
+            artwork_url=[]
+            artists=[]
+            artists_url = []
+            for img in img_matches:
+                artwork_url.append(img)
+                artists.append(img_matches[img][0])
+                artists_url.append(img_matches[img][1])
+
+        except:
+            return render_template("error.html")
 
 
     # for result in query_results:

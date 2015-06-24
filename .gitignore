@@ -9,6 +9,7 @@
 *.ai
 *.pem
 
+R
 demo_slides
 app/secret.py
 data_collection/SQL_database.sql
@@ -24,3 +25,4 @@ data_collection/SQL_database.sql
 secret.py
 data_collection/test_sql.py
 run.py
+.Rproj.user

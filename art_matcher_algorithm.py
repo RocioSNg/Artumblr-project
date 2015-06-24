@@ -67,6 +67,10 @@ def k_means():
 
 	# include only channel columns
 	art_df = art_df.loc[:,"Avg_Blue":"Low_Gray"]
+	# drop avg gray column since it is mostly lumped along a single value
+	art_df.drop("Avg_Gray")
+
+
 	# print channels_df.head()
 	# run clustering algorithm and fit the model
 	print "Now running the model"
@@ -139,8 +143,8 @@ def art_match(url):
 
 
 # for testing:
-# link = "http://www.cianellistudios.com/images/abstract-art/abstract-art-mother-earth.jpg"
-# for testing:
+# link=  "http://www.cianellistudios.com/images/abstract-art/abstract-art-mother-earth.jpg"
+# # for testing:
 # print art_match(link)
 
 # if __name__ == '__main__':
