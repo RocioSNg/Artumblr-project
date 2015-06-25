@@ -148,9 +148,9 @@ def art_match(url):
 
 
 # for testing:
-link =  "http://www.cianellistudios.com/images/abstract-art/abstract-art-mother-earth.jpg"
-# # for testing:
-art_match(link)
+# link =  "http://www.cianellistudios.com/images/abstract-art/abstract-art-mother-earth.jpg"
+# # # for testing:
+# art_match(link)
 
 
 
