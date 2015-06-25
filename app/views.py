@@ -37,8 +37,14 @@ def art_output(url=None):
     #     query_url = "http://37.media.tumblr.com/c4f9be2de49a997933cc3d5c78a36328/tumblr_n2cuiaAG3p1t7b5qro5_r1_1280.jpg"
     #     print query_url
 
-    # if user enters something that is not a proper image
-    if not query_url.endswith("jpg") or query_url.endswith("png"):
+
+    # check to make sure a real image is being uploaded
+    true_image = False
+
+    if query_url.endswith("jpg") or query_url.endswith("png"):
+        true_image = True
+
+    if true_image == False:
         return render_template("error.html")
 
 
