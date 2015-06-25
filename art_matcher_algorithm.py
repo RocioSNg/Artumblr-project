@@ -18,7 +18,7 @@ from img_feature_extraction import img_from_url
 import scipy.spatial as sp
 import pickle
 from sklearn.externals import joblib
-
+import time
 
 
 # for testing:
@@ -120,7 +120,8 @@ def art_match(url):
 	#print art_subset.head()
 	#cluster_center = k_means.cluster_centers_[cluster]
 
-	
+	start_time = time.time() # for checking time of matching
+
 	print "Now finding matches to the query image"
 	# calculate Eucldiean distances of art images to the query image
 	nrows = int(art_subset.shape[0])
@@ -128,8 +129,12 @@ def art_match(url):
 	for i in range(0,nrows):
 	    row = list(art_subset.iloc[i]) 
 	    distances.append(sp.distance.euclidean(row,query_img))
+
+	print("--- %s seconds ---" % (time.time() - start_time))
+
 	# adds noew column containing the distances    
 	art_subset["Distance"] = distances
+
 	
 
 	# sort and extract the  5 closest images
@@ -143,9 +148,12 @@ def art_match(url):
 
 
 # for testing:
-# link=  "http://www.cianellistudios.com/images/abstract-art/abstract-art-mother-earth.jpg"
+link =  "http://www.cianellistudios.com/images/abstract-art/abstract-art-mother-earth.jpg"
 # # for testing:
-# print art_match(link)
+art_match(link)
+
+
 
 # if __name__ == '__main__':
-# 	k_means()
+	# k_meyans()
+	
