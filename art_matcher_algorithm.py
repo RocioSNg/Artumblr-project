@@ -160,11 +160,11 @@ def art_match(url):
 
 
 
-if __name__ == '__main__':
-	k_means()
-	link =  "http://www.cianellistudios.com/images/abstract-art/abstract-art-mother-earth.jpg"
-# # # for testing:
-	art_match(link)
+# if __name__ == '__main__':
+# 	k_means()
+# 	link =  "http://www.cianellistudios.com/images/abstract-art/abstract-art-mother-earth.jpg"
+# # # # for testing:
+# 	art_match(link)
 
 
 
