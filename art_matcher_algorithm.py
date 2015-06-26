@@ -66,7 +66,7 @@ def k_means():
 	#---------------Clustering on CHANNELS ONLY--------------------------#
 
 	# include only channel columns
-	art_df = art_df.loc[:,"Avg_Blue":"Low_Gray"]
+	art_df = art_df.loc[:,"Avg_Blue":"Low_b"]
 	
 	# drop avg gray column since it is mostly lumped along a single value
 	art_df = art_df.drop("Avg_Gray", axis=1)
@@ -78,7 +78,7 @@ def k_means():
 	k_means = KMeans(n_clusters=9)
 	k_means.fit(art_df)
 	print "Now pickling the results of the model"
-	clf = joblib.dump(k_means, "RGB_kmeans_model.pkl")
+	clf = joblib.dump(k_means, "RGBLAB_kmeans_model.pkl")
 
 
 def art_match(url):
@@ -89,21 +89,21 @@ def art_match(url):
 
 	# load model results and database
 	print "Now loading the Pickled K-means Fit"
-	k_means = joblib.load('RGB_kmeans_model.pkl') 
+	k_means = joblib.load('RGBLAB_kmeans_model.pkl') 
 	# art_df = artwork_df()
 	print "Now loading art features dataframe"
 	art_df = pd.DataFrame.from_csv("art_df.csv", index_col= [0,1])
 
 
-	art_df = art_df.loc[:,"Avg_Blue":"Low_Gray"]
+	art_df = art_df.loc[:,"Avg_Blue":"Low_b"]
 	art_df = art_df.drop("Avg_Gray", axis=1)
 	
-
+	print art_df.shape
 	# load QUERY url and extracts the feature vector
 	print "Loading the query image"
 	query_img = img_from_url(url) # this has changed
 	# include only channel features
-	query_img = query_img[0:16] # last four have contour info
+	query_img = query_img[0:28] # last four have contour info
 	print len(query_img)
 	query_img.pop(12) # remove avg gray value
 	
@@ -122,6 +122,7 @@ def art_match(url):
 	indexes = np.where(labels == cluster)[0]
 	art_subset = art_df.iloc[indexes]
 	print "There are %i images in this cluster" % len(art_subset)
+
 	#print art_subset.head()
 	#cluster_center = k_means.cluster_centers_[cluster]
 
@@ -143,7 +144,7 @@ def art_match(url):
 
 	
 
-	# sort and extract the  5 closest images
+	# sort and extract the  6 closest images
 	df = art_subset.sort('Distance').iloc[0:6]
 	df.reset_index(inplace = True)
 	# get urls they refer to
