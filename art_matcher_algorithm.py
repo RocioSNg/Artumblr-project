@@ -66,7 +66,7 @@ def k_means():
 	#---------------Clustering on CHANNELS ONLY--------------------------#
 
 	# include only channel columns
-	art_df = art_df.loc[:,"Avg_Blue":"Low_b"]
+	art_df = art_df.loc[:,"Avg_Blue":"Low_Gray"]
 	
 	# drop avg gray column since it is mostly lumped along a single value
 	art_df = art_df.drop("Avg_Gray", axis=1)
@@ -78,7 +78,7 @@ def k_means():
 	k_means = KMeans(n_clusters=9)
 	k_means.fit(art_df)
 	print "Now pickling the results of the model"
-	clf = joblib.dump(k_means, "RGBLAB_kmeans_model.pkl")
+	clf = joblib.dump(k_means, "RGB_kmeans_model.pkl")
 
 
 def art_match(url):
@@ -89,13 +89,13 @@ def art_match(url):
 
 	# load model results and database
 	print "Now loading the Pickled K-means Fit"
-	k_means = joblib.load('RGBLAB_kmeans_model.pkl') 
+	k_means = joblib.load('RGB_kmeans_model.pkl') 
 	# art_df = artwork_df()
 	print "Now loading art features dataframe"
 	art_df = pd.DataFrame.from_csv("art_df.csv", index_col= [0,1])
 
 
-	art_df = art_df.loc[:,"Avg_Blue":"Low_b"]
+	art_df = art_df.loc[:,"Avg_Blue":"Low_Gray"]
 	art_df = art_df.drop("Avg_Gray", axis=1)
 	
 	print art_df.shape
