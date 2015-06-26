@@ -51,7 +51,7 @@ def artwork_df():
 	return art_df
 		#print art_df.head()
 
-#-----Have csv pre-loaded to save time on the algorithm-------#
+#-----Have csv pre-loaded to save processing time on the web-application-------#
 # artwork_df = artwork_df()
 # artwork_df.to_csv("art_df.csv")
 
@@ -66,9 +66,10 @@ def k_means():
 	#---------------Clustering on CHANNELS ONLY--------------------------#
 
 	# include only channel columns
-	art_df = art_df.loc[:,"Avg_Blue":"Low_Gray"]
+	art_df = art_df.loc[:,"Avg_Blue":"Low_b"]
+	
 	# drop avg gray column since it is mostly lumped along a single value
-	art_df.drop("Avg_Gray")
+	art_df = art_df.drop("Avg_Gray", axis=1)
 
 
 	# print channels_df.head()
@@ -89,18 +90,22 @@ def art_match(url):
 	# load model results and database
 	print "Now loading the Pickled K-means Fit"
 	k_means = joblib.load('kmeans_model.pkl') 
-	# art_df = artwork_df()
+	#art_df = artwork_df()
 	print "Now loading art features dataframe"
 	art_df = pd.DataFrame.from_csv("art_df.csv", index_col= [0,1])
 
 
-	art_df = art_df.loc[:,"Avg_Blue":"Low_Gray"]
+	art_df = art_df.loc[:,"Avg_Blue":"Low_b"]
+	art_df = art_df.drop("Avg_Gray", axis=1)
+	
 
 	# load QUERY url and extracts the feature vector
 	print "Loading the query image"
 	query_img = img_from_url(url) # this has changed
 	# include only channel features
-	query_img = query_img[0:16] # last four have contour info
+	query_img = query_img[0:28] # last four have contour info
+	print len(query_img)
+	query_img.pop(12) # remove avg gray value
 	
 	print query_img
 
@@ -147,13 +152,22 @@ def art_match(url):
 	return art_urls
 
 
-# for testing:
+# # for testing:
 # link =  "http://www.cianellistudios.com/images/abstract-art/abstract-art-mother-earth.jpg"
-# # # for testing:
+# # # # for testing:
 # art_match(link)
 
 
 
 # if __name__ == '__main__':
-	# k_meyans()
-	
+# 	k_means()
+# 	
+
+
+def k_means_contour():
+	pass
+	# extract contour
+	#art_df = artwork_df()
+	print "Now loading art contour features"
+	art_df = pd.DataFrame.from_csv("art_df.csv", index_col= [0,1])
+	art_df = art_df.loc[:,"Avg_Blue":"Low_b"]

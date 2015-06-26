@@ -1,11 +1,3 @@
-/*.bg { 
-	background: url("../images/artbanner.jpg");
-	position: fixed;
-	width: 100%;
-	height: 350px;
-	text-align: center;
-}*/
-
 .img-thumbnail {
   display: inline-block;
   max-height: 100%;
@@ -30,7 +22,6 @@
 	/*width:100%; */
 	/*height:100%;*/
 	margin-bottom: 20px;
-	
 }
 
 h1 {
@@ -65,7 +56,7 @@ h2 {
 
 body{
 	font-family: Gotham, sans-serif;
-	text-align: right;
+	text-align: center;
 	background-color: #00635D;
 	color: #F0FFFF;
 }
@@ -94,4 +85,12 @@ img{
 td
 {
     padding:0 15px 40px 15px;
+}
+
+.about_header{
+	font-size: 150%;
+}
+.project_description{
+	max-width: 1000px;
+	text-align: center;
 }
