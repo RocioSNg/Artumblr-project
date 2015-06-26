@@ -103,7 +103,7 @@ def art_match(url):
 	print "Loading the query image"
 	query_img = img_from_url(url) # this has changed
 	# include only channel features
-	query_img = query_img[0:28] # last four have contour info
+	query_img = query_img[0:16] # last four have contour info
 	print len(query_img)
 	query_img.pop(12) # remove avg gray value
 	
@@ -154,7 +154,7 @@ def art_match(url):
 	return art_urls
 
 
-# # # for testing:
+# # # # for testing:
 # link =  "http://www.cianellistudios.com/images/abstract-art/abstract-art-mother-earth.jpg"
 # # # # for testing:
 # art_match(link)
