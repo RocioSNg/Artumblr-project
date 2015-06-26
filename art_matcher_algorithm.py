@@ -75,10 +75,10 @@ def k_means():
 	# print channels_df.head()
 	# run clustering algorithm and fit the model
 	print "Now running the model"
-	k_means = KMeans(n_clusters=10)
+	k_means = KMeans(n_clusters=9)
 	k_means.fit(art_df)
 	print "Now pickling the results of the model"
-	clf = joblib.dump(k_means, "kmeans_model.pkl")
+	clf = joblib.dump(k_means, "RGB_kmeans_model.pkl")
 
 
 def art_match(url):
@@ -89,10 +89,10 @@ def art_match(url):
 
 	# load model results and database
 	print "Now loading the Pickled K-means Fit"
-	k_means = joblib.load('kmeans_model.pkl') 
-	art_df = artwork_df()
+	k_means = joblib.load('RGB_kmeans_model.pkl') 
+	# art_df = artwork_df()
 	print "Now loading art features dataframe"
-	# art_df = pd.DataFrame.from_csv("art_df.csv", index_col= [0,1])
+	art_df = pd.DataFrame.from_csv("art_df.csv", index_col= [0,1])
 
 
 	art_df = art_df.loc[:,"Avg_Blue":"Low_Gray"]
@@ -103,7 +103,7 @@ def art_match(url):
 	print "Loading the query image"
 	query_img = img_from_url(url) # this has changed
 	# include only channel features
-	query_img = query_img[0:28] # last four have contour info
+	query_img = query_img[0:16] # last four have contour info
 	print len(query_img)
 	query_img.pop(12) # remove avg gray value
 	
@@ -131,6 +131,7 @@ def art_match(url):
 	# calculate Eucldiean distances of art images to the query image
 	nrows = int(art_subset.shape[0])
 	distances = []
+
 	for i in range(0,nrows):
 	    row = list(art_subset.iloc[i]) 
 	    distances.append(sp.distance.euclidean(row,query_img))
@@ -152,16 +153,19 @@ def art_match(url):
 	return art_urls
 
 
-# # for testing:
+# # # for testing:
 # link =  "http://www.cianellistudios.com/images/abstract-art/abstract-art-mother-earth.jpg"
 # # # # for testing:
 # art_match(link)
 
 
 
-# if __name__ == '__main__':
-# 	k_means()
-	
+if __name__ == '__main__':
+	k_means()
+	link =  "http://www.cianellistudios.com/images/abstract-art/abstract-art-mother-earth.jpg"
+# # # for testing:
+	art_match(link)
+
 
 
 def k_means_contour():
