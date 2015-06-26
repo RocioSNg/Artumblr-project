@@ -159,8 +159,8 @@ def art_match(url):
 
 
 
-if __name__ == '__main__':
-	k_means()
+# if __name__ == '__main__':
+# 	k_means()
 	
 
 

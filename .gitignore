@@ -9,6 +9,7 @@
 *.ai
 *.pem
 
+k_means
 R
 demo_slides
 app/secret.py
